@@ -95,7 +95,7 @@ const getSalesAgent = (id) => {
 
       console.log(response)
       if(response && !response.ok){
-        throw "unable to add lead";
+        throw new Error("unable to add lead");
       }
 
       const data = await response.json();
