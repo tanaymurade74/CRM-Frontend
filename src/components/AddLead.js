@@ -38,18 +38,20 @@ console.log(name);
     data: agent,
   } = useFetch(`${process.env.REACT_APP_API_URL}/agents`);
 
+  const getSalesAgent = (id) => {
+    if(agent && agent.agents.length > 0){
+        const ag = agent.agents.filter(ag => ag._id === id);
+        return ag.length > 0? ag[0].name : "Agent Unassigned/Deleted";
+    }
+  }
+
   useEffect(() => {
     if(agent && agent.agents  && agent.agents.length > 0 && (salesAgent === "" || `${getSalesAgent(salesAgent)}` === "Agent Unassigned/Deleted")){
         setSalesAgent(agent.agents[0]._id);
     }
   }, [agent, salesAgent, getSalesAgent])
 
-const getSalesAgent = (id) => {
-    if(agent && agent.agents.length > 0){
-        const ag = agent.agents.filter(ag => ag._id === id);
-        return ag.length > 0? ag[0].name : "Agent Unassigned/Deleted";
-    }
-  }
+
 
 
   const handleTagChange = (e) => {
