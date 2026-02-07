@@ -26,9 +26,12 @@ const AddLead = () => {
   const [status, setStatus] = useState(leadToUpdate?.status || "New");
   const [priority, setPriority] = useState(leadToUpdate?.priority || "High");
   const [timeToClose, setTimeToClose] = useState(leadToUpdate?.timeToClose || "");
-  const [tags, setTags] = useState(leadToUpdate?.tags || ["High-Value"]);
+  const [tags, setTags] = useState(leadToUpdate?.tags || ["High-Value"])
+    
+ 
   const [leadAdded, setLeadAdded] = useState(false);
 
+  console.log(tags)
 console.log(name);
 
   const {
