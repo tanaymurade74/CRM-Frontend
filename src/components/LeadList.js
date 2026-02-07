@@ -113,14 +113,34 @@ const LeadList = () => {
     return     <div className="d-flex flex-column min-vh-100">
 
        <Header search = {search} setSearch = {setSearch} />
-        <main className="container mt-4 flex-grow-1">
+        <main className="mt-4 flex-grow-1">
+
+        <div className="container p-4 bg-body-secondary">
+          <button
+            className="btn btn-primary w-100 mb-3 d-md-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#filterSection"
+            aria-expanded="false"
+            aria-controls="filterSection"
+          >
+            Show/Hide Filters
+          </button>
+
             <div className="row">
-                <div className="col-12 col-md-3 mb-4 text-center">
+                <div className="col-md-3 mb-4">
+                    <div className="collapse d-md-block" id="filterSection">
                     <div className="row">
-                        <div className="col-md-6">
+                        <div className="col-md-8">
                     <h2>Filters: </h2><br/>
                     <div>
                     <label id= "status"><strong>Filter by Status:</strong> </label><br/><br/>
+                               <input 
+                                                checked={status === ""} 
+                                                type="radio" 
+                                                name="status" 
+                                                onChange={() => setStatus("")} 
+                                            /> All Status <br />
                     <input checked = {status === "New"} type = "radio" name = "status" onChange = {() => setStatus("New")} /> New <br/>
                     <input checked = {status === "Contacted"} type = "radio" name = "status" onChange = {() => setStatus("Contacted")} /> Contacted <br/>
                      <input checked = {status === "Qualified"} type = "radio" name = "status" onChange = {() => setStatus("Qualified")} /> Qualified <br/>
@@ -130,6 +150,14 @@ const LeadList = () => {
 
                     <div>
                         <label id = "agent"><strong>Filter By Sales Agent: </strong></label><br/><br/>
+                        <div>
+                                                <input 
+                                                    checked={selectAgent === ""} 
+                                                    type="radio" 
+                                                    name="agent" 
+                                                    onChange={() => setSelectAgent("")} 
+                                                /> All Agents
+                                            </div>
                         {agents.map(agent => (
                            <div>
                               <input checked = {selectAgent === `${agent._id}`} required type = "radio" value= {agent.name} name = "agent" onChange = {() => setSelectAgent(`${agent._id}`)}/> {agent.name}
@@ -153,16 +181,17 @@ const LeadList = () => {
                     </div>
                    </div>
 
-                   <div className="col-md-6">
+                   <div className="col-md-4">
 
                     <h3><button onClick = {() => handleClear()}>Clear</button></h3>
 
                    </div>
                    </div>         
                 </div>
+                </div>
 
 
-                <div className="col-12 col-md-9 ">
+                <div className="col-md-9 ">
                 {loading && (
                 <div
                   className="d-flex justify-content-center align-items-center"
@@ -220,7 +249,7 @@ const LeadList = () => {
                 </div>
 
             </div>
-            
+            </div>
         </main>
         <Footer/>
     </div>

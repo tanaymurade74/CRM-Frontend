@@ -62,7 +62,44 @@ const SalesAgentList = () => {
     <div className="d-flex flex-column min-vh-100">
     <HeaderWithoutSearch/>
     <main className="flex-grow-1 container">
-{loading && (
+
+<h1 className="text-center mt-3">Sales Agents</h1>
+      <div className="card p-4 mb-5 mt-4 ">
+            <form onSubmit={handleAgentAddition}>
+                <div className="row g-3">
+                    <div className="col-md-5">
+                        <label className="form-label"><strong>Name:</strong></label>
+                        <input
+                            type="text"
+                            className="form-control"
+                            required
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="John Doe"
+                        />
+                    </div>
+                    <div className="col-md-5">
+                        <label className="form-label"><strong>Email:</strong></label>
+                        <input
+                            type="email"
+                            className="form-control"
+                            required
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            placeholder="johnDoe@gmail.com"
+                        />
+                    </div>
+                    
+                    <div className="col-md-2 d-flex align-items-end">
+                        <button type="submit" className="btn btn-primary w-100">
+                            Add New Agent
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        {loading && (
                 <div
                   className="d-flex justify-content-center align-items-center"
                   style={{ minHeight: "400px" }}
@@ -80,9 +117,10 @@ const SalesAgentList = () => {
                 </div>
               )}   
                  {error && <p>Error while fetching salesAgents</p>}
+
       {listAgent && listAgent.length > 0 ? (
         <div className="container text-center">
-          <h1 className="text-center">Sales Agents</h1>
+          {/* <h1 className="text-center">Sales Agents</h1> */}
           <div className="row">
             {listAgent.map((agent) => (
               <div className="col-md-6">
@@ -98,53 +136,8 @@ const SalesAgentList = () => {
               </div>
             ))}
           </div>
-          <button
-            className="btn btn-primary form-control mt-4"
-            onClick={() => {
-              setAddAgent(!addAgent);
-              setSuccess(false);
-            }}
-          >
-            {addAgent ? "Hide" : "Add New Agent"}
-          </button>
-          {addAgent ? (
-            <div className="text-center mt-3">
-              {/* <div> */}
-              <form onSubmit={handleAgentAddition}>
-                <label>
-                  <strong>Name: </strong>
-                </label>
-                <br />
-                <input
-                  type="text"
-                  required
-                  onChange={(e) => setName(e.target.value)}
-                  placeholder="John Doe"
-                />
-                <br />
-                <br />
-                <label>
-                  <strong>Email: </strong>
-                </label>
-                <br />
-                <input
-                  type="email"
-                  required
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="johnDoe@gmail.com"
-                />
-                <br />
-                {/* </div> */}
-                <button type="submit" className="btn btn-secondary mt-3">
-                  Add Agent
-                </button>
-              </form>
-            </div>
-          ) : (
-            ""
-          )}
-        </div>
-      ) : (
+          </div>
+       ): (
         ""
       )}
       </main>

@@ -24,15 +24,15 @@ const Header = ({search, setSearch}) => {
             <span className="navbar-toggler-icon"></span>
           </button>
           <div className="collapse navbar-collapse" id="navbarNav">
-            <ul className="navbar-nav ">
+            <ul className="navbar-nav  me-auto ps-2 ps-lg-0">
              
 
-              {/* <li className="nav-item">
+              <li className="nav-item">
                 <NavLink className="nav-link" to="/">
                   <img className = "img-fluid" style ={{height: "35px", objectFit: "cover"}}
-                  src = "https://img.icons8.com/ios_filled/1200/circled-left-2.jpg"/>
+                  src = "https://www.pngkey.com/png/full/357-3576760_digital-dashboards-bi-dashboard-icon-png-flat.png"/>
                 </NavLink>
-              </li> */}
+              </li>
 
                <li className="nav-item">
                 <NavLink className="nav-link" to="/settings">
@@ -44,11 +44,19 @@ const Header = ({search, setSearch}) => {
               </li>
              
             </ul>
+<div className="d-flex mt-2 mt-lg-0 justify-content-end">
+              <input
+                className="form-control me-2" 
+                type="text"
+                placeholder="Search By Lead Name"
+                value={search} 
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
+            
 
           </div>
-          <div>
-            <input className="rounded" type = "text" placeholder="Search By Lead Name" onChange = {(e) => setSearch(e.target.value)}/>
-          </div>
+          
         </div>
       </nav>
     </div>
