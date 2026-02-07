@@ -1,8 +1,7 @@
 import { useState } from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import useFetch from "../useFetch";
 import { useEffect } from "react";
-import Header from "../constants/Header";
 import Footer from "../constants/Footer";
 import HeaderWithoutSearch from "../constants/HeaderWithoutSearch";
 import {toast} from "react-toastify"
@@ -34,20 +33,16 @@ console.log(name);
 
   const {
     data: tag,
-    loading: loadTag,
-    error: errorTag,
   } = useFetch(`${process.env.REACT_APP_API_URL}/tag`);
   const {
     data: agent,
-    loading: agentLoading,
-    error: errorAgent,
   } = useFetch(`${process.env.REACT_APP_API_URL}/agents`);
 
   useEffect(() => {
     if(agent && agent.agents  && agent.agents.length > 0 && (salesAgent === "" || `${getSalesAgent(salesAgent)}` === "Agent Unassigned/Deleted")){
         setSalesAgent(agent.agents[0]._id);
     }
-  }, [agent, salesAgent])
+  }, [agent, salesAgent, getSalesAgent])
 
 const getSalesAgent = (id) => {
     if(agent && agent.agents.length > 0){

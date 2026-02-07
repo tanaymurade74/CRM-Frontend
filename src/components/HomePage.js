@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import Header from "../constants/Header";
 import Footer from "../constants/Footer";
 import HeaderWithoutSearch from "../constants/HeaderWithoutSearch";
 

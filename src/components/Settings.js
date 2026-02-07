@@ -10,11 +10,10 @@ const Settings = () => {
   const [allAgents, setAllAgents] = useState([]);
   const [activeView, setActiveView] = useState("leads");
 
-  const { data, loading, error } = useFetch(`${process.env.REACT_APP_API_URL}/leads`);
+  const { data} = useFetch(`${process.env.REACT_APP_API_URL}/leads`);
   const {
     data: salesAgent,
-    loading: loadingSalesAgent,
-    error: salesAgentError,
+   
   } = useFetch(`${process.env.REACT_APP_API_URL}/agents`);
 
   useEffect(() => {
@@ -74,7 +73,7 @@ const Settings = () => {
         },
       });
 
-      const data = await response.json();
+       await response.json();
       toast.warn(`Agent ${getSalesAgent(agentId)} has been deleted` )
     } catch {
       toast.error("Error while trying to delete agent");

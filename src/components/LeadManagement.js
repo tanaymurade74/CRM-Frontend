@@ -1,6 +1,6 @@
 import useFetch from "../useFetch";
 import { Link, useParams } from "react-router-dom";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import HeaderWithoutSearch from "../constants/HeaderWithoutSearch";
 import Footer from "../constants/Footer";
 import {toast} from "react-toastify"
@@ -8,7 +8,6 @@ import {toast} from "react-toastify"
 const LeadManagement = () => {
   const param = useParams();
   const leadId = param.leadId;
-  const [lead, setLead] = useState();
   const [addComment, setAddComment] = useState("");
   const [author, setAuthor] = useState("");
   const [commentText, setCommentText] = useState();
@@ -22,16 +21,12 @@ const LeadManagement = () => {
   console.log(data);
 
   const {
-    data: comment,
-    loading: commentLoading,
-    error: commentError,
+    data: comment
   } = useFetch(`${process.env.REACT_APP_API_URL}/leads/${leadId}/comments`);
   console.log(comment);
 
   const {
-    data: salesAgent,
-    loading: salesAgentLoading,
-    error: salesAgentError,
+    data: salesAgent
   } = useFetch(`${process.env.REACT_APP_API_URL}/agents`);
   console.log(salesAgent);
 

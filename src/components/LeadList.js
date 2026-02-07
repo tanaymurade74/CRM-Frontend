@@ -26,8 +26,9 @@ const LeadList = () => {
 
     const apiUrl = search.trim() === "" ? `${process.env.REACT_APP_API_URL}/leads` : `${process.env.REACT_APP_API_URL}/leads/search/${decodeURIComponent(search)}`;
     
-    const {data, loading, error} = useFetch(apiUrl);
-    const {data: salesAgent, loading: salesAgentLoading, error: salesAgentError} = useFetch(`${process.env.REACT_APP_API_URL}/agents`)
+    const {data, loading, } = useFetch(apiUrl);
+    const {data: salesAgent
+    } = useFetch(`${process.env.REACT_APP_API_URL}/agents`)
     
     useEffect(() => {
         if(data && data.Leads){
@@ -206,7 +207,9 @@ const LeadList = () => {
                     : 
                     <div>
                     { !loading && <div>
-                        <img className="img-fluid" style ={{height: "35rem", width: "45rem"}} src = "https://cdn2.hubspot.net/hubfs/190063/get-more-leads-2015.jpg"/>
+                        <img className="img-fluid" 
+                        alt = ""
+                        style ={{height: "35rem", width: "45rem"}} src = "https://cdn2.hubspot.net/hubfs/190063/get-more-leads-2015.jpg"/>
                     </div>
                     }
                     </div>
