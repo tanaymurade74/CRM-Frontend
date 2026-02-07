@@ -112,9 +112,9 @@ const getSalesAgent = (id) => {
       }else{
         navigate("/leadList")
       }
-    } catch (error){
+    } catch{
 
-       console.error("Error submitting form:", error);
+    //    console.error("Error submitting form:", error);
       toast.error("Error while trying to save lead");
 
 
