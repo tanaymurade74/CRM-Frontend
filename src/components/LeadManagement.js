@@ -174,51 +174,76 @@ className="btn btn-primary col-12 col-md-auto"
                  </Link>
               </div>
 
-              <div className="card-body p-4">
-                <div className="row g-5">
-                    <div className="col-md-6 text-start">
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item px-0 d-flex justify-content-between">
-                                <span>Status</span>
-                                <span >{lead.status}</span>
-                            </li>
-                            <li className="list-group-item px-0 d-flex justify-content-between">
-                                <span>Priority</span>
-                                <span 
-                                >
-                                    {lead.priority}
-                                </span>
-                            </li>
-                            <li className="list-group-item px-0 d-flex justify-content-between">
-                                <span>Source</span>
-                                <span>{lead.source}</span>
-                            </li>
-                        </ul>
+             <div className="card-body p-0"> {/* Removed padding here to control it in rows */}
+                <div className="container-fluid px-0">
+                    
+                    {/* Row 1: Status */}
+                    <div className="row mx-0 py-3 border-bottom align-items-center">
+                        <div className="col-5 col-md-4 text-start">
+                            <span className="fw-bold text-muted text-uppercase small">Status</span>
+                        </div>
+                        <div className="col-7 col-md-8 text-end text-md-start">
+                            <span className="text-dark">{lead.status}</span>
+                        </div>
                     </div>
 
-                    <div className="col-md-6 text-start">
-                        <ul className="list-group list-group-flush">
-                            <li className="list-group-item px-0 d-flex justify-content-between">
-                                <span>Assigned Agent</span>
-                                <span >{getSalesAgent(lead.salesAgent)}</span>
-                            </li>
-                            <li className="list-group-item px-0 d-flex justify-content-between">
-                                <span> Time to Close</span>
-                                <span>{lead.timeToClose} Days</span>
-                            </li>
-                            <li className="list-group-item px-0 d-flex justify-content-between">
-                                <span className="d-block mb-1">Tags</span>
-                                <span>
-                                    {lead.tags.join(",")}
-                                </span>
-                            </li>
-                        </ul>
+                    {/* Row 2: Priority */}
+                    <div className="row mx-0 py-3 border-bottom align-items-center">
+                        <div className="col-5 col-md-4 text-start">
+                            <span className="fw-bold text-muted text-uppercase small">Priority</span>
+                        </div>
+                        <div className="col-7 col-md-8 text-end text-md-start">
+                            <span 
+                            >
+                                {lead.priority}
+                            </span>
+                        </div>
                     </div>
+
+                    {/* Row 3: Source */}
+                    <div className="row mx-0 py-3 border-bottom align-items-center">
+                        <div className="col-5 col-md-4 text-start">
+                            <span className="fw-bold text-muted text-uppercase small">Source</span>
+                        </div>
+                        <div className="col-7 col-md-8 text-end text-md-start">
+                            <span>{lead.source}</span>
+                        </div>
+                    </div>
+
+                    {/* Row 4: Assigned Agent */}
+                    <div className="row mx-0 py-3 border-bottom align-items-center">
+                        <div className="col-5 col-md-4 text-start">
+                            <span className="fw-bold text-muted text-uppercase small">Assigned Agent</span>
+                        </div>
+                        <div className="col-7 col-md-8 text-end text-md-start">
+                            <span>{getSalesAgent(lead.salesAgent)}</span>
+                        </div>
+                    </div>
+
+                    {/* Row 5: Time to Close */}
+                    <div className="row mx-0 py-3 border-bottom align-items-center">
+                        <div className="col-5 col-md-4 text-start">
+                            <span className="fw-bold text-muted text-uppercase small">Time to Close</span>
+                        </div>
+                        <div className="col-7 col-md-8 text-end text-md-start">
+                            <span>{lead.timeToClose} Days</span>
+                        </div>
+                    </div>
+
+                    {/* Row 6: Tags */}
+                    <div className="row mx-0 py-3 align-items-center"> {/* No border-bottom on last item */}
+                        <div className="col-5 col-md-4 text-start">
+                            <span className="fw-bold text-muted text-uppercase small">Tags</span>
+                        </div>
+                        <div className="col-7 col-md-8 text-end text-md-start">
+                            <span className="text-dark">{lead.tags.join(", ")}</span>
+                        </div>
+                    </div>
+
                 </div>
               </div>
             </div>
 <hr/>
-
              <div className="d-flex justify-content-between align-items-center mb-3">
                 <h2>Comments</h2>
                 
@@ -300,7 +325,7 @@ className="btn btn-primary col-12 col-md-auto"
                                     {com.commentText}
                                 </p>
                             </div>
-                            <button className="btn btn-danger form-control mt-2" onClick={() => { handleDeleteComment(`${com._id}`) }}>Delete Comment</button>
+                            {/* <button className="btn btn-danger form-control mt-2" onClick={() => { handleDeleteComment(`${com._id}`) }}>Delete Comment</button> */}
                         </div>
                     ))}
                     <br />
