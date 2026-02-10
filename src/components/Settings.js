@@ -4,81 +4,85 @@ import { Link } from "react-router-dom";
 import HeaderWithoutSearch from "../constants/HeaderWithoutSearch";
 import Footer from "../constants/Footer";
 import {toast} from "react-toastify"
+import useSettingsContext from "../contexts/SettingsContext";
 
 const Settings = () => {
-  const [allLeads, setAllLeads] = useState([]);
-  const [allAgents, setAllAgents] = useState([]);
-  const [activeView, setActiveView] = useState("leads");
+    const { allLeads, setAllLeads, allAgents, setAllAgents, activeView, setActiveView, data, salesAgent, getSalesAgent, 
+    handleAgentDelete, handleLeadDelete} = useSettingsContext();
+    
+//   const [allLeads, setAllLeads] = useState([]);
+//   const [allAgents, setAllAgents] = useState([]);
+//   const [activeView, setActiveView] = useState("leads");
 
-  const { data} = useFetch(`${process.env.REACT_APP_API_URL}/leads`);
-  const {
-    data: salesAgent,
+//   const { data} = useFetch(`${process.env.REACT_APP_API_URL}/leads`);
+//   const {
+//     data: salesAgent,
    
-  } = useFetch(`${process.env.REACT_APP_API_URL}/agents`);
+//   } = useFetch(`${process.env.REACT_APP_API_URL}/agents`);
 
-  useEffect(() => {
-    if (data && data.Leads && data.Leads.length > 0) {
-      setAllLeads(data.Leads);
-    }
-    if (salesAgent && salesAgent.agents && salesAgent.agents.length > 0) {
-      setAllAgents(salesAgent.agents);
-    }
-  }, [data, salesAgent]);
+//   useEffect(() => {
+//     if (data && data.Leads && data.Leads.length > 0) {
+//       setAllLeads(data.Leads);
+//     }
+//     if (salesAgent && salesAgent.agents && salesAgent.agents.length > 0) {
+//       setAllAgents(salesAgent.agents);
+//     }
+//   }, [data, salesAgent]);
 
-  const getSalesAgent = (id) => {
-    if (salesAgent && salesAgent.agents && salesAgent.agents.length > 0) {
-      const agent = salesAgent.agents.filter((ag) => ag._id === id);
-      return agent.length > 0 ? agent[0].name : "Agent Unassigned/Deleted";
-    }
-  };
+//   const getSalesAgent = (id) => {
+//     if (salesAgent && salesAgent.agents && salesAgent.agents.length > 0) {
+//       const agent = salesAgent.agents.filter((ag) => ag._id === id);
+//       return agent.length > 0 ? agent[0].name : "Agent Unassigned/Deleted";
+//     }
+//   };
 
-  const handleLeadDelete = async (leadId) => {
-    const filteredLeads = allLeads.filter((lead) => lead._id !== leadId);
-    const toDelete = allLeads.filter(lead => lead._id === leadId);
-    setAllLeads(filteredLeads);
+//   const handleLeadDelete = async (leadId) => {
+//     const filteredLeads = allLeads.filter((lead) => lead._id !== leadId);
+//     const toDelete = allLeads.filter(lead => lead._id === leadId);
+//     setAllLeads(filteredLeads);
 
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/leads/${leadId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+//     try {
+//       const response = await fetch(`${process.env.REACT_APP_API_URL}/leads/${leadId}`, {
+//         method: "DELETE",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       });
 
-      const data = await response.json();
-      toast.warn(`Lead: ${toDelete[0].name} has been deleted`)
-    } catch {
-      toast.error("Error while trying to delete lead.");
-    }
-  };
+//       const data = await response.json();
+//       toast.warn(`Lead: ${toDelete[0].name} has been deleted`)
+//     } catch {
+//       toast.error("Error while trying to delete lead.");
+//     }
+//   };
 
-  const handleAgentDelete = async (agentId) => {
-    const leads = allLeads.map((lead) => {
-      if (lead.salesAgent === agentId) {
-        return { ...lead, salesAgent: null };
-      }
-      return lead;
-    });
+//   const handleAgentDelete = async (agentId) => {
+//     const leads = allLeads.map((lead) => {
+//       if (lead.salesAgent === agentId) {
+//         return { ...lead, salesAgent: null };
+//       }
+//       return lead;
+//     });
 
-    setAllLeads(leads);
+//     setAllLeads(leads);
 
-    const filteredAgents = allAgents.filter((ag) => ag._id !== agentId);
-    setAllAgents(filteredAgents);
+//     const filteredAgents = allAgents.filter((ag) => ag._id !== agentId);
+//     setAllAgents(filteredAgents);
 
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/agents/${agentId}`, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      });
+//     try {
+//       const response = await fetch(`${process.env.REACT_APP_API_URL}/agents/${agentId}`, {
+//         method: "DELETE",
+//         headers: {
+//           "Content-Type": "application/json",
+//         },
+//       });
 
-       await response.json();
-      toast.warn(`Agent ${getSalesAgent(agentId)} has been deleted` )
-    } catch {
-      toast.error("Error while trying to delete agent");
-    }
-  };
+//        await response.json();
+//       toast.warn(`Agent ${getSalesAgent(agentId)} has been deleted` )
+//     } catch {
+//       toast.error("Error while trying to delete agent");
+//     }
+//   };
 
   return (
     <div className="d-flex flex-column min-vh-100">

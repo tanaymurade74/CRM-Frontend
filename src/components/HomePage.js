@@ -49,16 +49,7 @@ const HomePage = () => {
           </Link>
         </div>
 
-        {/* <div className="col-md-6 col-lg-3">
-          <Link to="/sales" style={{ textDecoration: "none" }}>
-            <div className="card h-100 shadow-sm border-0 text-center p-4 option-card">
-              <div className="card-body">
-                <h3 className="card-title text-danger">Settings</h3>
-                <p className="card-text text-muted">Track revenue and goals</p>
-              </div>
-            </div>
-          </Link>
-        </div> */}
+       
         
        
 
@@ -70,14 +61,7 @@ const HomePage = () => {
         
         <div className="col-md-6 col-lg-3">
         
-        {/* <Link  to="/reports"  style={{ textDecoration: "none" }} > 
-        <div className="card h-100  border-1 text-center p-4 option-card">
-              <div className="card-body">
-                <h3 className="card-title text-danger">Sales Agent View</h3>
-                <p className="card-text text-muted">View Leads Managed by Agents</p>
-              </div>
-              </div>
-        </Link> */}
+     
 
 </div>
 </div>

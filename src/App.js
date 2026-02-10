@@ -12,6 +12,12 @@ import Reports from "./components/Reports.js";
 import SalesAgentList from "./components/SalesAgentList.js";
 import Settings from "./components/Settings.js";
 import { ToastContainer } from "react-toastify";
+import { LeadListProvider } from "./contexts/LeadListContext.js";
+import { LeadManagementProvider } from "./contexts/LeadManagementContext.js";
+import { AddLeadProvider } from "./contexts/AddLeadContext.js";
+import { SalesAgentListProvider } from "./contexts/SalesAgentListContext.js";
+import { ReportsProvider } from "./contexts/ReportsContext.js";
+import { SettingsProvider } from "./contexts/SettingsContext.js";
 
 function App() {
   return (
@@ -30,13 +36,32 @@ function App() {
           />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path = "/leadList" element = {<LeadList/>} />
-        <Route path = "/addLead" element = {<AddLead/>}/>
-        <Route path = "/lead/:leadId" element = {<LeadManagement/>}/>
-        <Route path = "/reports" element = {<Reports/>}/>
-        {/* <Route path = "/addAgent" element = {<AddSalesAgent/>}/> */}
-        <Route path = "/salesAgentList" element = {<SalesAgentList/>}/>
-        <Route path = "/settings" element = {<Settings/>}/>
+        <Route path = "/leadList" element = {
+          <LeadListProvider>
+          <LeadList/>
+          </LeadListProvider>
+          } />
+        <Route path = "/addLead" element = {
+          <AddLeadProvider>
+          <AddLead/>
+          </AddLeadProvider>}/>
+        <Route path = "/lead/:leadId" element = {
+          <LeadManagementProvider>
+          <LeadManagement/>
+          </LeadManagementProvider>}/>
+        <Route path = "/reports" element = {
+          <ReportsProvider>
+          <Reports/>
+          </ReportsProvider>}/>
+        <Route path = "/salesAgentList" element = {
+          <SalesAgentListProvider>
+          <SalesAgentList/>
+          </SalesAgentListProvider>}/>
+        <Route path = "/settings" element = {
+          <SettingsProvider>
+          <Settings/>
+          </SettingsProvider>
+          }/>
       </Routes>
     </Router>
   );

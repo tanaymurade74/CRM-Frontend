@@ -1,5 +1,16 @@
+import { useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import { useState } from "react";
 const Header = ({search, setSearch}) => {
+
+    const [localSearch, setLocalSearch] = useState(search);
+
+   useEffect(( )=> {
+    const debounceSearch = setTimeout(() => {
+        setSearch(localSearch);
+    }, 500)
+    return ()=>clearTimeout(debounceSearch)
+   },[localSearch, setLocalSearch])
 
   return (
     <div >
@@ -49,8 +60,8 @@ const Header = ({search, setSearch}) => {
                 className="form-control me-2" 
                 type="text"
                 placeholder="Search By Lead Name"
-                value={search} 
-                onChange={(e) => setSearch(e.target.value)}
+                value={localSearch} 
+                onChange={(e) =>setLocalSearch(e.target.value) }
               />
             </div>
             

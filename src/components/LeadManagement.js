@@ -4,145 +4,14 @@ import { useEffect, useState } from "react";
 import HeaderWithoutSearch from "../constants/HeaderWithoutSearch";
 import Footer from "../constants/Footer";
 import {toast} from "react-toastify"
+import useLeadManagementContext from "../contexts/LeadManagementContext";
 
 const LeadManagement = () => {
-  const param = useParams();
-  const leadId = param.leadId;
-  const [addComment, setAddComment] = useState("");
-  const [author, setAuthor] = useState("");
-  const [commentText, setCommentText] = useState();
-  const [commentAdded, setCommentAdded] = useState(false);
-  const[localComment, setLocalComments] = useState([]);
-  const [sortOrder, setSortOrder] = useState("newest")
 
+    const{leadId, addComment, setAddComment,author, setAuthor 
+    , commentText, setCommentText, commentAdded, setCommentAdded, localComment, setLocalComments
+    , sortOrder, setSortOrder, data, loading, error, comment, salesAgent, sortedComments, getSalesAgent, handleSubmit} = useLeadManagementContext();
 
-  const { data, loading, error } = useFetch(
-    `${process.env.REACT_APP_API_URL}/leads?_id=${leadId}`
-  );
-  console.log(data);
-
-  const {
-    data: comment
-  } = useFetch(`${process.env.REACT_APP_API_URL}/leads/${leadId}/comments`);
-  console.log(comment);
-
-  const {
-    data: salesAgent
-  } = useFetch(`${process.env.REACT_APP_API_URL}/agents`);
-  console.log(salesAgent);
-
-  useEffect(() => {
-    if (comment && comment.comments) {
-      setLocalComments(comment.comments);
-
-    //   localComment.sort((a, b) => {
-    //     if(sortOrder === "newest"){
-    //     const date1 =new Date (a.createdAt);
-    //     const date2 = new Date(b.createdAt);
-
-    //     return date1 - date2;
-    //     }else{
-    //        const date1 = new Date(a.createdAt);
-    //     const date2 = new Date(b.createdAt);
-
-    //     return date2 - date1;
-    //     }
-    //   })
-    }
-  }, [comment])
-
-  useEffect(() => {
-    if(salesAgent && salesAgent.agents.length > 0 && author === ""){
-        setAuthor(salesAgent.agents[0]._id)
-    }
-  }, [salesAgent, author])
-
-  const sortedComments = [...localComment].sort((a, b) => {
-    const date1 = new Date(a.createdAt);
-    const date2 = new Date(b.createdAt);
-
-    if (sortOrder === "newest") {
-      return date2 - date1; 
-    } else {
-      return date1 - date2; 
-    }
-  });
-
-
-
-
-  const getSalesAgent = (id) => {
-    if(salesAgent && salesAgent.agents.length > 0){
-        const agent = salesAgent.agents.filter(ag => ag._id === id);
-        return agent.length > 0? agent[0].name : "Agent Unassigned/Deleted";
-    }
-  }
-
-
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const payload = {
-      lead: leadId,
-      author,
-      commentText,
-    };
-   console.log(payload)
-
-    try {
-      const response = await fetch(
-        `${process.env.REACT_APP_API_URL}/leads/${leadId}/comments`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(payload),
-        }
-      );
-    // if(response && !response.ok){
-    //      throw("error while trying to add comment");
-    // }
-      const data = await response.json();
-
-
-
-      setLocalComments([...localComment, data])
-       setCommentAdded(true);
-
-       setCommentText("");
-    setAuthor("");
-        toast.success("Comment added successfully !")
-    
-       e.target.reset();
-
-    } catch {
-      toast.error("Error occurred while trying to add comment");
-    }
-  };
-
-  const handleDeleteComment = async (commentId) => {
-    const filteredComments = localComment.filter(com => com._id !== commentId);
-    
-    try{
-        const response = await fetch(`${process.env.REACT_APP_API_URL}/comments/${commentId}`, {
-            method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-        console.log(response)
-        const data = await response.json();
-        setLocalComments(filteredComments);
-
-        toast.warn("Comment has been deleted")
-
-
-    }catch{
-        toast.error("Error while trying to delete comment")
-    }
-  }
 
   return (
     <div className="d-flex flex-column min-vh-100">
@@ -174,10 +43,9 @@ className="btn btn-primary col-12 col-md-auto"
                  </Link>
               </div>
 
-             <div className="card-body p-0"> {/* Removed padding here to control it in rows */}
+             <div className="card-body p-0">
                 <div className="container-fluid px-0">
                     
-                    {/* Row 1: Status */}
                     <div className="row mx-0 py-3 border-bottom align-items-center">
                         <div className="col-5 col-md-4 text-start">
                             <span className="fw-bold text-muted text-uppercase small">Status</span>
@@ -187,7 +55,6 @@ className="btn btn-primary col-12 col-md-auto"
                         </div>
                     </div>
 
-                    {/* Row 2: Priority */}
                     <div className="row mx-0 py-3 border-bottom align-items-center">
                         <div className="col-5 col-md-4 text-start">
                             <span className="fw-bold text-muted text-uppercase small">Priority</span>
@@ -200,7 +67,6 @@ className="btn btn-primary col-12 col-md-auto"
                         </div>
                     </div>
 
-                    {/* Row 3: Source */}
                     <div className="row mx-0 py-3 border-bottom align-items-center">
                         <div className="col-5 col-md-4 text-start">
                             <span className="fw-bold text-muted text-uppercase small">Source</span>
@@ -210,7 +76,6 @@ className="btn btn-primary col-12 col-md-auto"
                         </div>
                     </div>
 
-                    {/* Row 4: Assigned Agent */}
                     <div className="row mx-0 py-3 border-bottom align-items-center">
                         <div className="col-5 col-md-4 text-start">
                             <span className="fw-bold text-muted text-uppercase small">Assigned Agent</span>
@@ -220,7 +85,6 @@ className="btn btn-primary col-12 col-md-auto"
                         </div>
                     </div>
 
-                    {/* Row 5: Time to Close */}
                     <div className="row mx-0 py-3 border-bottom align-items-center">
                         <div className="col-5 col-md-4 text-start">
                             <span className="fw-bold text-muted text-uppercase small">Time to Close</span>
@@ -230,8 +94,7 @@ className="btn btn-primary col-12 col-md-auto"
                         </div>
                     </div>
 
-                    {/* Row 6: Tags */}
-                    <div className="row mx-0 py-3 align-items-center"> {/* No border-bottom on last item */}
+                    <div className="row mx-0 py-3 align-items-center"> 
                         <div className="col-5 col-md-4 text-start">
                             <span className="fw-bold text-muted text-uppercase small">Tags</span>
                         </div>
@@ -252,7 +115,6 @@ className="btn btn-primary col-12 col-md-auto"
                     <select 
                         className="form-select form-select-sm" 
                         style={{width: "150px"}}
-                        // value={sortOrder}
                         onChange={(e) => setSortOrder(e.target.value)}
                     >
                         <option  value="newest" >Newest First</option>

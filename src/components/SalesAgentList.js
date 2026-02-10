@@ -3,60 +3,12 @@ import useFetch from "../useFetch";
 import HeaderWithoutSearch from "../constants/HeaderWithoutSearch";
 import Footer from "../constants/Footer";
 import {toast} from "react-toastify"
+import useSalesAgentListContext from "../contexts/SalesAgentListContext";
 
 const SalesAgentList = () => {
-  const [addAgent, setAddAgent] = useState(false);
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [success, setSuccess] = useState(false);
-  const [listAgent, setListAgents] = useState([]);
 
-  const { data, loading, error } = useFetch(`${process.env.REACT_APP_API_URL}/agents`);
-
-  useEffect(() => {
-    if (data && data.agents && data.agents.length > 0) {
-      setListAgents(data.agents);
-    }
-  }, [data]);
-
-  const handleAgentAddition = async (e) => {
-    e.preventDefault();
-
-    const payload = {
-      name,
-      email,
-    };
-
-    try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/agents`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-    //   if (!response.ok) {
-    //     throw "could not add the salesAgent";
-    //   }
-
-      const agentData = await response.json();
-      console.log(agentData);
-      setSuccess(true);
-
-      setListAgents([...listAgent, agentData.agent]);
-      setName("");
-      setEmail("")
-
-        toast.success("Agent added successfully !")
-      
-      e.target.reset();
-
-      //   e.reset();
-    } catch {
-      toast.error("Error while trying to add the salesAgent");
-    }
-  };
+    const {addAgent, setAddAgent, name, setName, email, setEmail, success, setSuccess, listAgent, setListAgents
+    , data, loading, error, handleAgentAddition} = useSalesAgentListContext();
 
   return (
     <div className="d-flex flex-column min-vh-100">
